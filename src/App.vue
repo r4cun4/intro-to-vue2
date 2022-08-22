@@ -100,18 +100,16 @@ export default {
       cart: 0,
       onSale: true,
       detailArr: ['80% cotton', '20% polyester', 'Gender-neutral'],
-      // imgArr: ['https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg', 'https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg'],
+      imgArr: ['https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg', 'https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg'],
       variants: [
         {
           variantId: 2234,
           variantColor: 'green',
-          // variantImage: 'https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg',
           variantQuantity: 10
         },
         {
           variantId: 2235,
           variantColor: 'blue',
-          // variantImage: 'https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg',
           variantQuantity: 0
         }
       ],
@@ -144,9 +142,9 @@ export default {
     title() {
       return this.brand + ' ' + this.product
     },
-    image() {
-      return this.variants[this.selectedVariant].variantImage
-    },
+    // image() {
+    //   return this.variants[this.selectedVariant].variantImage
+    // },
     inStock() {
       return this.variants[this.selectedVariant].variantQuantity
     },

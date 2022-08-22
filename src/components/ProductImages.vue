@@ -1,8 +1,9 @@
 <template>
     <div class="product-image">
       <img
-        v-for="(image, index) in images" :key="index"
-        :src="imgSrc" 
+        v-for="(image, index) in imgArr"
+        :key="index"
+        :src="image"
         :alt="altText"
       />
     </div>
@@ -19,15 +20,8 @@ export default {
     data() {
       return {
         altText: 'A pair of socks',
-        images: ['https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg', 'https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg'],
-      }
-    },
-    methods: {
-      imgSrc() {
-        console.log(this.images)
       }
     }
-
 }
 </script>
 
