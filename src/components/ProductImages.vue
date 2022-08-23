@@ -1,9 +1,9 @@
 <template>
-    <div class="product-image">
+    <div>
       <img
         v-for="(image, index) in imgArr"
         :key="index"
-        :src="image"
+        :src="image.imgSrc"
         :alt="altText"
       />
     </div>
