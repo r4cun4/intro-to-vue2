@@ -6,7 +6,7 @@
       :key="index"
       class="color-box"
       :style="{ backgroundColor: colorArr[index] }"
-      @mouseover="$emit('updateProduct')"
+      @mouseover="$emit('update-product', index)"
       >
       </li>
     </ul>

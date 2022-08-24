@@ -11,7 +11,7 @@
       <ProductDetails :detailArr="showDetail"/>
       <ProductColors
         :colorArr="showColors"
-        @update-product="changeImg" />
+        @update-product="changeImg($event)" />
     </div>
 
 </div>
@@ -74,8 +74,17 @@ export default {
     rmvFromCart() {
       if(this.cart > 0) return this.cart -= 1
     },
-    changeImg () {
-      console.log('hola')
+    changeImg(index) {
+      const greenSocks = document.querySelector('.product-image > div :nth-child(1)')
+      const blueSocks = document.querySelector('.product-image > div :nth-child(2)')
+      
+      if(index === 0) {
+        greenSocks.style.display = 'block'
+        blueSocks.style.display = 'none'
+      } else {
+        greenSocks.style.display = 'none'
+        blueSocks.style.display = 'block'
+      }
     }
   },
   computed: {
