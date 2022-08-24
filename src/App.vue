@@ -9,7 +9,9 @@
         
     <div class="product-info">
       <ProductDetails :detailArr="showDetail"/>
-      <ProductColors :colorArr="showColors"/>
+      <ProductColors
+        :colorArr="showColors"
+        @update-product="changeImg" />
     </div>
 
 </div>
@@ -71,6 +73,9 @@ export default {
     },
     rmvFromCart() {
       if(this.cart > 0) return this.cart -= 1
+    },
+    changeImg () {
+      console.log('hola')
     }
   },
   computed: {

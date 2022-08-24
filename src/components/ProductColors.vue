@@ -3,9 +3,10 @@
   <h3>Available Colors</h3>
     <ul>
       <li v-for="(color, index) in colorArr"
-      :key="color"
+      :key="index"
       class="color-box"
       :style="{ backgroundColor: colorArr[index] }"
+      @mouseover="$emit('updateProduct')"
       >
       </li>
     </ul>
