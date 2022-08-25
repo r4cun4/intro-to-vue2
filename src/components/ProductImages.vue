@@ -5,6 +5,7 @@
         :key="index"
         :src="image.imgSrc"
         :alt="altText"
+        v-show="index < notFirstProduct"
       />
     </div>
 </template>
@@ -20,11 +21,12 @@ export default {
     data() {
       return {
         altText: 'A pair of socks',
+        notFirstProduct: 1
       }
     }
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

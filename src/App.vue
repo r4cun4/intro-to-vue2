@@ -36,6 +36,7 @@ export default {
       onSale: true,
       detailArr: ['80% cotton', '20% polyester', 'Gender-neutral'],
       colorArr: ['green', 'blue'],
+      image: false,
       imgArr: [
         {
           imgSrc: 'https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg'
@@ -77,7 +78,7 @@ export default {
     changeImg(index) {
       const greenSocks = document.querySelector('.product-image > div :nth-child(1)')
       const blueSocks = document.querySelector('.product-image > div :nth-child(2)')
-      
+
       if(index === 0) {
         greenSocks.style.display = 'block'
         blueSocks.style.display = 'none'
@@ -85,7 +86,7 @@ export default {
         greenSocks.style.display = 'none'
         blueSocks.style.display = 'block'
       }
-    }
+    },
   },
   computed: {
     inStock() {
@@ -100,7 +101,8 @@ export default {
     showImg() {
       return this.imgArr
     }
-  }
+  },
+
 }
 </script>
 
@@ -134,6 +136,7 @@ ul {
 }
 
 img {
+  display: block;
   border: 1px solid #d8d8d8;
   width: 70%;
   margin: 40px;
