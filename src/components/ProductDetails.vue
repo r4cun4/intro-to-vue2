@@ -4,7 +4,7 @@
     <div class="product-description">
         <h1>{{ title }}</h1>
 
-        <a :href="link" target="_blank">I am binded link</a>
+        <a :href="link" target="_blank">I am a binded link</a>
 
         <h3>Product Details</h3>
         <ul>

@@ -12,8 +12,8 @@
       <ProductColors
         :colorArr="showColors"
         @update-product="changeImg($event)" />
+      <ProductStock :stockArr="showStock"/>
     </div>
-
 </div>
 <!-- app  -->
 </template>
@@ -22,21 +22,17 @@
 import ProductImages from './components/ProductImages.vue'
 import ProductDetails from './components/ProductDetails.vue'
 import ProductColors from './components/ProductColors.vue'
+import ProductStock from './components/ProductStock.vue'
 
 export default {
   name: 'App',
   // activating Vue on the div with the id of app
-  components: { ProductImages, ProductDetails, ProductColors },
+  components: { ProductImages, ProductDetails, ProductColors, ProductStock },
   data() { 
   //The instance’s data can be accessed from inside the element that the instance is plugged into.
     return {
-      selectedVariant: 0,
-      inventory: 11,
-      cart: 0,
-      onSale: true,
       detailArr: ['80% cotton', '20% polyester', 'Gender-neutral'],
       colorArr: ['green', 'blue'],
-      image: false,
       imgArr: [
         {
           imgSrc: 'https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg'
@@ -45,27 +41,54 @@ export default {
           imgSrc: 'https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg'
         }
       ],
-      variants: [
-        {
-          variantId: 2234,
-          variantQuantity: 10
-        },
-        {
-          variantId: 2235,
-          variantQuantity: 0
-        }
-      ],
-      sizes: [
-        {
-          sizeName: 'S'
-        },
-        {
-          sizeName: 'M'
-        },
-        {
-          sizeName: 'L'
-        }
-      ]
+      stockArr: [
+            {
+              itemId: 1,
+              stock: [
+                {
+                  size : 'S',
+                  quantity: 10
+                },
+                {
+                  size : 'M',
+                  quantity: 1
+                },
+                {
+                  size: 'L',
+                  quantity: 0
+                }
+              ]
+            },
+            {
+              itemId: 2,
+              quantity: 0
+            }
+        ]
+      // selectedVariant: 0,
+      // inventory: 11,
+      // cart: 0,
+      // onSale: true,
+      // variants: [
+      //   {
+      //     variantId: 2234,
+      //     variantQuantity: 10
+      //   },
+      //   {
+      //     variantId: 2235,
+      //     variantQuantity: 0
+      //   }
+      // ],
+      // sizes: [
+      //   {
+      //     sizeName: 'S'
+      //   },
+      //   {
+      //     sizeName: 'M'
+      //   },
+      //   {
+      //     sizeName: 'L'
+      //   }
+      // ]
     }
   },
   methods: {
@@ -82,9 +105,13 @@ export default {
       if(index === 0) {
         greenSocks.style.display = 'block'
         blueSocks.style.display = 'none'
+        document.querySelector('p:first-child').style.display = 'block'
+        document.querySelector('p + p').style.display = 'none'
       } else {
         greenSocks.style.display = 'none'
         blueSocks.style.display = 'block'
+        document.querySelector('p:first-child').style.display = 'none'
+        document.querySelector('p + p').style.display = 'block'
       }
     },
   },
@@ -100,6 +127,9 @@ export default {
     },
     showImg() {
       return this.imgArr
+    },
+    showStock() {
+      return this.stockArr
     }
   },
 
