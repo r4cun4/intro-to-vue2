@@ -40,10 +40,10 @@ export default {
 <style scoped>
 
     div {
-        border: 1px solid lightgray;
         border-radius: 5px;
         padding: 15px;
         margin: 40px 0 10px;
+        box-shadow: rgb(18 32 53 / 10%) 0px 4px 64px 0px;
     }
 
     ul {

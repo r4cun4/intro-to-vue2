@@ -10,9 +10,12 @@
     <div class="product-info">
       <ProductDetails :detailArr="showDetail"/>
       <ProductColors
-        :colorArr="showColors"
+        :colorArr="stockArr"
         @update-product="changeImg($event)" />
-      <ProductStock :stockArr="showStock"/>
+      <ProductStock
+        :stock="stockArr" 
+        :color="currentColor"
+       />
     </div>
 </div>
 <!-- app  -->
@@ -31,8 +34,8 @@ export default {
   data() { 
   //The instance’s data can be accessed from inside the element that the instance is plugged into.
     return {
+      currentColor : '',
       detailArr: ['80% cotton', '20% polyester', 'Gender-neutral'],
-      colorArr: ['green', 'blue'],
       imgArr: [
         {
           imgSrc: 'https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg'
@@ -44,6 +47,7 @@ export default {
       stockArr: [
             {
               itemId: 1,
+              color: 'green',
               stock: [
                 {
                   size : 'S',
@@ -51,44 +55,33 @@ export default {
                 },
                 {
                   size : 'M',
-                  quantity: 1
+                  quantity: 0
                 },
                 {
                   size: 'L',
-                  quantity: 0
+                  quantity: 3
                 }
               ]
             },
             {
               itemId: 2,
-              quantity: 0
+              color: 'blue',
+              stock: [
+                {
+                  size : 'S',
+                  quantity: 3
+                },
+                {
+                  size : 'M',
+                  quantity: 5
+                },
+                {
+                  size: 'L',
+                  quantity: 1
+                }
+              ]
             }
         ]
-      // selectedVariant: 0,
-      // inventory: 11,
-      // cart: 0,
-      // onSale: true,
-      // variants: [
-      //   {
-      //     variantId: 2234,
-      //     variantQuantity: 10
-      //   },
-      //   {
-      //     variantId: 2235,
-      //     variantQuantity: 0
-      //   }
-      // ],
-      // sizes: [
-      //   {
-      //     sizeName: 'S'
-      //   },
-      //   {
-      //     sizeName: 'M'
-      //   },
-      //   {
-      //     sizeName: 'L'
-      //   }
-      // ]
     }
   },
   methods: {
@@ -99,26 +92,29 @@ export default {
       if(this.cart > 0) return this.cart -= 1
     },
     changeImg(index) {
+      this.currentColor = this.stockArr[index].color
       const greenSocks = document.querySelector('.product-image > div :nth-child(1)')
       const blueSocks = document.querySelector('.product-image > div :nth-child(2)')
 
       if(index === 0) {
         greenSocks.style.display = 'block'
         blueSocks.style.display = 'none'
-        document.querySelector('p:first-child').style.display = 'block'
-        document.querySelector('p + p').style.display = 'none'
+        // document.querySelectorAll('p').style.display = 'block'
+        // document.querySelector('p:first-child').style.display = 'block'
+        // document.querySelector('p + p').style.display = 'none'
       } else {
         greenSocks.style.display = 'none'
         blueSocks.style.display = 'block'
-        document.querySelector('p:first-child').style.display = 'none'
-        document.querySelector('p + p').style.display = 'block'
+        // document.querySelectorAll('p').style.display = 'block'
+        // document.querySelector('p:first-child').style.display = 'none'
+        // document.querySelector('p + p').style.display = 'block'
       }
     },
   },
   computed: {
-    inStock() {
-      return this.variants[this.selectedVariant].variantQuantity
-    },
+    // inStock() {
+    //   return this.variants[this.selectedVariant].variantQuantity
+    // },
     showDetail() {
       return this.detailArr
     },
@@ -128,10 +124,7 @@ export default {
     showImg() {
       return this.imgArr
     },
-    showStock() {
-      return this.stockArr
-    }
-  },
+  }
 
 }
 </script>
@@ -167,15 +160,14 @@ ul {
 
 img {
   display: block;
-  border: 1px solid #d8d8d8;
   width: 70%;
   margin: 40px;
-  box-shadow: 0px .5px 1px #d8d8d8;
   border-radius: 5px;
 }
 
 .product-image {
   flex-basis: 40%;
+  box-shadow: rgb(18 32 53 / 10%) 0px 4px 64px 0px;
 }
 
 .product-info {
@@ -197,9 +189,9 @@ img {
 .product-cart {
   display: flex;
   align-items: center;
-  border: 1px solid lightgray;
   border-radius: 10px;
   padding: 10px;
+  box-shadow: rgb(18 32 53 / 10%) 0px 4px 64px 0px;
 }
 
 .container-product--buttons {
@@ -240,4 +232,5 @@ textarea {
   width: 100%;
   height: 60px;
 }
+
 </style>

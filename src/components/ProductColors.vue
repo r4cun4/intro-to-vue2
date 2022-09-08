@@ -2,10 +2,10 @@
 <div>
   <h3>Available Colors</h3>
     <ul>
-      <li v-for="(color, index) in colorArr"
+      <li v-for="(item, index) in colorArr"
       :key="index"
       class="color-box"
-      :style="{ backgroundColor: colorArr[index] }"
+      :style="{ backgroundColor: item.color }"
       @click="$emit('update-product', index, colorSelected(index))"
       >
       </li>
@@ -25,6 +25,8 @@ export default {
   methods: {
     colorSelected(index) {
 
+      // console.log(index)
+
       if( index === 0 ) {
         document.querySelector('ul > .color-box').style.border = '2px solid black'
         document.querySelector('ul > .color-box + li').style.border = 'none'
@@ -42,10 +44,10 @@ export default {
 <style scoped>
 
 div {
-        border: 1px solid lightgray;
-        border-radius: 5px;
-        padding: 15px;
-        margin: 40px 0 10px;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 40px 0 10px;
+    box-shadow: rgb(18 32 53 / 10%) 0px 4px 64px 0px;
     }
 
 ul {
@@ -63,7 +65,7 @@ ul {
 }
 
 .active {
-  border: 2px solid black;
+  border: 2px solid #00bfff;
 }
 
 </style>
