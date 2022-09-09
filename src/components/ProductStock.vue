@@ -1,15 +1,17 @@
 <template>
     <div>
-        <p
-            v-for="(item, index) in stock"
+        <!-- <button
+            v-for="(item, index) in stockArr.find( obj => obj.color == this.color )?.stock"
             :key="index" class="size"
          >
- 
-        </p>
+         {{item}}
+        </button>   -->
 
-            <button @click="showSize()">check</button>
-
-    
+        <button
+          v-for="(item, index) in showStock3"
+          :key="index">
+          {{item.size}} {{item.quantity}}
+        </button>
   
     </div>
 </template>
@@ -19,7 +21,7 @@
 export default {
     name: 'ProductStock',
     props: {
-        stock: {
+        stockArr: {
             type: Array
         },
         color: {
@@ -29,47 +31,35 @@ export default {
     data() {
         return {
             
-            isActive : false
-
         }
     },
-    methods: {
-        showSize() {
+    computed: {
+        showStock() {
 
-            const filterElements = this.stock.find( obj => obj.color == this.color )
+            return this.stockArr.find( obj => obj.color == this.color )?.stock
+
+        },
+        showStock2() {
+
+            const filterElements = this.stockArr.find( obj => obj.color == this.color )
             console.log('soy el find', filterElements)
 
-            filterElements.stock.forEach(items => {
+            return filterElements ? filterElements.stock : filterElements
 
-                console.log(items, this.color)
+        },
+        showStock3() {
 
-                if(this.color === 'green') {
-                    const newP = document.createElement('p')
-                    const newContent = document.createTextNode(`${items.size} / ${items.quantity}`)
-                    newP.appendChild(newContent)
-                    const currentP = document.querySelector('p:first-child')
-                    currentP.style.display = 'block'
-                    document.querySelector('.size + .size').style.display = 'none'
-                    console.log(currentP)
-                    currentP.appendChild(newP)
-                    this.isActive = true
-                }
+            const filterElements = this.stockArr.find( obj => obj.color == this.color )
 
-                if(this.color === 'blue') {
-                    const newP = document.createElement('p')
-                    const newContent = document.createTextNode(`${items.size} / ${items.quantity}`)
-                    newP.appendChild(newContent)
-                    const currentP = document.querySelector('.size + .size')
-                    currentP.style.display = 'block'
-                    document.querySelector('p:first-child').style.display = 'none'
-                    currentP.appendChild(newP)
-                    this.isActive = true
-                }
+            if( filterElements ) {
+                return filterElements.stock
+            }
 
-            });
+            return filterElements
 
         }
-    }
+
+    },
 }
 </script>
 

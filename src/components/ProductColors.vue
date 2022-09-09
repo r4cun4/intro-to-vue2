@@ -6,7 +6,7 @@
       :key="index"
       class="color-box"
       :style="{ backgroundColor: item.color }"
-      @click="$emit('update-product', index, colorSelected(index))"
+      @click="$emit('update-product', index);colorSelected(index)"
       >
       </li>
     </ul>

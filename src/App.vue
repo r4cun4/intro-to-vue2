@@ -13,7 +13,7 @@
         :colorArr="stockArr"
         @update-product="changeImg($event)" />
       <ProductStock
-        :stock="stockArr" 
+        :stockArr="stockArr" 
         :color="currentColor"
        />
     </div>
