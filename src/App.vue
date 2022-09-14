@@ -17,6 +17,19 @@
         :color="currentColor"
        />
     </div>
+
+    <div class="product-review">
+      <p v-if="!reviews.length">There are no reviews yet.</p>
+        <ul v-else>
+          <li v-for="(review, index) in reviews" :key="index">
+            <p>{{ review.name }}</p>
+            <p>Rating:{{ review.rating }}</p>
+            <p>{{ review.review }}</p>
+          </li>
+        </ul>
+     <ProductReview
+        @review-submitted="addReview" />
+    </div>
 </div>
 <!-- app  -->
 </template>
@@ -26,15 +39,16 @@ import ProductImages from './components/ProductImages.vue'
 import ProductDetails from './components/ProductDetails.vue'
 import ProductColors from './components/ProductColors.vue'
 import ProductStock from './components/ProductStock.vue'
+import ProductReview from './components/ProductReview.vue'
 
 export default {
   name: 'App',
   // activating Vue on the div with the id of app
-  components: { ProductImages, ProductDetails, ProductColors, ProductStock },
+  components: { ProductImages, ProductDetails, ProductColors, ProductStock, ProductReview },
   data() { 
   //The instance’s data can be accessed from inside the element that the instance is plugged into.
     return {
-      currentColor : '',
+      currentColor : 'green',
       detailArr: ['80% cotton', '20% polyester', 'Gender-neutral'],
       imgArr: [
         {
@@ -45,43 +59,44 @@ export default {
         }
       ],
       stockArr: [
+        {
+          itemId: 1,
+          color: 'green',
+          stock: [
             {
-              itemId: 1,
-              color: 'green',
-              stock: [
-                {
-                  size : 'S',
-                  quantity: 10
-                },
-                {
-                  size : 'M',
-                  quantity: 0
-                },
-                {
-                  size: 'L',
-                  quantity: 3
-                }
-              ]
+              size : 'S',
+              quantity: 10
             },
             {
-              itemId: 2,
-              color: 'blue',
-              stock: [
-                {
-                  size : 'S',
-                  quantity: 3
-                },
-                {
-                  size : 'M',
-                  quantity: 5
-                },
-                {
-                  size: 'L',
-                  quantity: 1
-                }
-              ]
+              size : 'M',
+              quantity: 0
+            },
+            {
+              size: 'L',
+              quantity: 3
             }
-        ]
+          ]
+        },
+        {
+          itemId: 2,
+          color: 'blue',
+          stock: [
+            {
+              size : 'S',
+              quantity: 3
+            },
+            {
+              size : 'M',
+              quantity: 5
+            },
+            {
+              size: 'L',
+              quantity: 1
+            }
+          ]
+        }
+      ],
+      reviews: []
     }
   },
   methods: {
@@ -92,29 +107,22 @@ export default {
       if(this.cart > 0) return this.cart -= 1
     },
     changeImg(index) {
-      this.currentColor = this.stockArr[index].color
-      const greenSocks = document.querySelector('.product-image > div :nth-child(1)')
-      const blueSocks = document.querySelector('.product-image > div :nth-child(2)')
 
-      if(index === 0) {
-        greenSocks.style.display = 'block'
-        blueSocks.style.display = 'none'
-        // document.querySelectorAll('p').style.display = 'block'
-        // document.querySelector('p:first-child').style.display = 'block'
-        // document.querySelector('p + p').style.display = 'none'
-      } else {
-        greenSocks.style.display = 'none'
-        blueSocks.style.display = 'block'
-        // document.querySelectorAll('p').style.display = 'block'
-        // document.querySelector('p:first-child').style.display = 'none'
-        // document.querySelector('p + p').style.display = 'block'
-      }
+      this.currentColor = this.stockArr[index].color
+
+      const elFirstImg = document.querySelector('.product-image > div :nth-child(1)')
+      const elSecondImg = document.querySelector('.product-image > div :nth-child(2)')
+
+      index === 0 ? elFirstImg.style.display = 'block' : elFirstImg.style.display = 'none'
+      index === 1 ? elSecondImg.style.display = 'block' : elSecondImg.style.display = 'none'
+
     },
+    addReview(productReview) {
+      this.reviews.push(productReview)
+    }
   },
   computed: {
-    // inStock() {
-    //   return this.variants[this.selectedVariant].variantQuantity
-    // },
+
     showDetail() {
       return this.detailArr
     },
@@ -123,7 +131,15 @@ export default {
     },
     showImg() {
       return this.imgArr
-    },
+    }
+
+  },
+  mounted() {
+    
+    const elFirstLi = document.querySelector('ul > .color-box')
+
+    this.currentColor == 'green' ? elFirstLi.classList.add('active') : elFirstLi.classList.remove('active')
+
   }
 
 }
@@ -132,6 +148,7 @@ export default {
 <style>
 #app {
   display: flex;
+  flex-wrap: wrap;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -177,6 +194,18 @@ img {
   flex-basis: 60%;
 }
 
+.product-review {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  margin-top: 50px;
+  gap: 20px;
+}
+
+.product-review p {
+  text-align: left;
+}
+
 .product-size {
   display: flex;
   align-items: center;
@@ -212,18 +241,6 @@ button {
   background-color: #d8d8d8;
 }
 
-.review-form {
-  width: 30%;
-  padding: 20px;
-  border: 1px solid #d8d8d8;  
-}
-
-input {
-  width: 100%;  
-  height: 25px;
-  margin-bottom: 20px;
-}
-
 li {
   list-style: none;
 }
@@ -231,6 +248,10 @@ li {
 textarea {
   width: 100%;
   height: 60px;
+}
+
+.active {
+  border: 3px solid #000;
 }
 
 </style>

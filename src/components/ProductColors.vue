@@ -25,17 +25,12 @@ export default {
   methods: {
     colorSelected(index) {
 
-      // console.log(index)
+      const elFirstLi = document.querySelector('ul > .color-box')
+      const elSecondLi = document.querySelector('ul > .color-box + li')
 
-      if( index === 0 ) {
-        document.querySelector('ul > .color-box').style.border = '2px solid black'
-        document.querySelector('ul > .color-box + li').style.border = 'none'
-      }
+      index === 0 ? elFirstLi.classList.add('active') : elFirstLi.classList.remove('active')
+      index === 1 ? elSecondLi.classList.add('active') : elSecondLi.classList.remove('active')
 
-       if( index === 1 ) {
-        document.querySelector('ul > .color-box + li').style.border = '2px solid black'
-        document.querySelector('ul > .color-box').style.border = 'none'
-      }
     }
   }
 }
@@ -65,7 +60,7 @@ ul {
 }
 
 .active {
-  border: 2px solid #00bfff;
+  border: 3px solid #000;
 }
 
 </style>
