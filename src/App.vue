@@ -21,8 +21,11 @@
     <div class="container-cart-review">
       <div class="product-cart">
         <ProductCart
+          :stockArr="stockArr"
+          :color="currentColor"
           @add-event-click="addToCart"
           @sub-event-click="subFromCart" />
+          Cart({{cart}})
       </div>
 
       <div class="product-review">
@@ -100,7 +103,8 @@ export default {
           ]
         }
       ],
-      reviews: []
+      reviews: [],
+      cart: 0
     }
   },
   methods: {
@@ -120,6 +124,9 @@ export default {
       index === 0 ? elFirstImg.style.display = 'block' : elFirstImg.style.display = 'none'
       index === 1 ? elSecondImg.style.display = 'block' : elSecondImg.style.display = 'none'
 
+    },
+    updateCart(id) {
+      this.cart.push(id)
     }
 
   },
