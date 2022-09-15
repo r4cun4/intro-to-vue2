@@ -1,3 +1,4 @@
+import { EventBus } from '@/event-bus';
 <template>
   <div>
     <!-- two way data binding -->
@@ -11,17 +12,17 @@
         </p>
 
         <p>
-          <label for="name">Name:</label>
+          <label for="name">*Name:</label>
           <input id="name" v-model="name">
         </p>
         
         <p>
-          <label for="review">Review:</label>      
+          <label for="review">*Review:</label>      
           <textarea id="review" v-model="review"></textarea>
         </p>
         
         <p>
-          <label for="rating">Rating:</label>
+          <label for="rating">*Rating:</label>
           <!-- .number ensures that the data will be converted into an integer -->
           <select id="rating" v-model.number="rating">
             <option>5</option>
@@ -33,10 +34,10 @@
         </p>
 
         <div>
-            <p>Would you recommend this product?</p>
-            <input type="radio" id="recommendChoice1" name="recommend" value="yes" v-model="isActive">
+            <p>Would you recommend this product? (optional)</p>
+            <input type="radio" id="recommendChoice1" name="recommend" value="yes" v-model="recommend">
             <label for="recommendChoice1">yes</label>
-            <input type="radio" id="recommendChoice2" name="recommend" value="no" v-model="isActive">
+            <input type="radio" id="recommendChoice2" name="recommend" value="no" v-model="recommend">
             <label for="recommendChoice2">no</label>
         </div>
             
@@ -49,6 +50,7 @@
 </template>
 
 <script>
+import { eventBus } from '../main'
 export default {
     name: 'ProductReview',
     data() {
@@ -57,7 +59,7 @@ export default {
             name: null,
             review: null,
             rating: null,
-            isActive: null,
+            recommend: null,
             errors: []
         }
 
@@ -68,17 +70,19 @@ export default {
 
             this.errors = []
 
-            if(this.name && this.review && this.rating) {
+            if(this.name && this.review && this.rating && this.recommend) {
 
                 let productReview = {
                     name: this.name,
                     review: this.review,
-                    rating: this.rating
+                    rating: this.rating,
+                    recommend: this.recommend
                 }
-                this.$emit('review-submitted', productReview),
+                eventBus.$emit('review-submitted', productReview),
                 this.name = null
                 this.review = null
                 this.rating = null
+                this.recommend = null
 
             } else {
 

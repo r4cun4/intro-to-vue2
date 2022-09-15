@@ -18,33 +18,37 @@
        />
     </div>
 
-    <div class="product-review">
-      <p v-if="!reviews.length">There are no reviews yet.</p>
-        <ul v-else>
-          <li v-for="(review, index) in reviews" :key="index">
-            <p>{{ review.name }}</p>
-            <p>Rating:{{ review.rating }}</p>
-            <p>{{ review.review }}</p>
-          </li>
-        </ul>
-     <ProductReview
-        @review-submitted="addReview" />
+    <div class="container-cart-review">
+      <div class="product-cart">
+        <ProductCart
+          @add-event-click="addToCart"
+          @sub-event-click="subFromCart" />
+      </div>
+
+      <div class="product-review">
+        <ProductTabs
+          :reviews="reviews" />
+      </div>
     </div>
+
 </div>
 <!-- app  -->
 </template>
 
 <script>
+import { eventBus } from './main'
 import ProductImages from './components/ProductImages.vue'
 import ProductDetails from './components/ProductDetails.vue'
 import ProductColors from './components/ProductColors.vue'
 import ProductStock from './components/ProductStock.vue'
-import ProductReview from './components/ProductReview.vue'
+import ProductCart from './components/ProductCart.vue'
+import ProductTabs from './components/ProductTabs.vue'
 
 export default {
+
   name: 'App',
   // activating Vue on the div with the id of app
-  components: { ProductImages, ProductDetails, ProductColors, ProductStock, ProductReview },
+  components: { ProductImages, ProductDetails, ProductColors, ProductStock, ProductCart, ProductTabs },
   data() { 
   //The instance’s data can be accessed from inside the element that the instance is plugged into.
     return {
@@ -101,10 +105,10 @@ export default {
   },
   methods: {
     addToCart() {
-      this.cart += 1
+      console.log('soy addToCart')
     },
-    rmvFromCart() {
-      if(this.cart > 0) return this.cart -= 1
+    subFromCart() {
+      console.log('soy subFromCart')
     },
     changeImg(index) {
 
@@ -116,10 +120,8 @@ export default {
       index === 0 ? elFirstImg.style.display = 'block' : elFirstImg.style.display = 'none'
       index === 1 ? elSecondImg.style.display = 'block' : elSecondImg.style.display = 'none'
 
-    },
-    addReview(productReview) {
-      this.reviews.push(productReview)
     }
+
   },
   computed: {
 
@@ -139,6 +141,10 @@ export default {
     const elFirstLi = document.querySelector('ul > .color-box')
 
     this.currentColor == 'green' ? elFirstLi.classList.add('active') : elFirstLi.classList.remove('active')
+
+    eventBus.$on('review-submitted', productReview => {
+      this.reviews.push(productReview)
+    })
 
   }
 
@@ -194,39 +200,28 @@ img {
   flex-basis: 60%;
 }
 
-.product-review {
-  display: flex;
-  justify-content: center;
-  width: 100vw;
-  margin-top: 50px;
-  gap: 20px;
-}
-
-.product-review p {
-  text-align: left;
-}
-
-.product-size {
+.container-cart-review {
   display: flex;
   align-items: center;
-}
-
-.cart {
-  padding: 5px 20px;
+  justify-content: center;
+  box-shadow: rgb(18 32 53 / 10%) 0px 4px 64px 0px;
+  width: 100%;
+  margin-top: 50px;
+  padding: 25px;
 }
 
 .product-cart {
   display: flex;
   align-items: center;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: rgb(18 32 53 / 10%) 0px 4px 64px 0px;
+  justify-content: center;
+  width: 100%;
 }
 
-.container-product--buttons {
+.product-review {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 button {
